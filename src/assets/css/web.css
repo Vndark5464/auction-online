@@ -1,0 +1,116 @@
+.hero-area {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-area .home3-banner {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.banner3-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #FFF; /* White color for text */
+}
+.blockcode {
+    background-color:antiquewhite;
+}
+#head-head {
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Optional: This ensures the header always appears on top of other page elements */
+    background-color: white; /* Optional: Replace with the background color of your choice */
+    width: 100%;
+}
+#body-body {
+    margin-top: 5%;
+}
+.vh-100{
+    margin-top: 6%;
+}
+  
+  #server-time-clock{
+    float: left;
+    margin-left: 20px;
+  }
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	line-height: .9;
+	font-weight: 700;
+	color: #333;
+}
+.profile-block {
+    margin:30px auto;
+    position: relative;
+    overflow: hidden;
+    max-width: auto; 
+  }
+.profile-block .user-heading {
+  background: #c5251e none repeat scroll 0 0;
+  border-radius: 4px 4px 0 0;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+.profile-block .user-heading a img {
+	border-radius: 50%;
+	margin:auto auto 10px;
+	display: block;
+	height: 140px;
+	width: 140px;
+	border: 10px solid rgba(255, 255, 255, 0.71);
+}
+.profile-block .user-heading h1 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 22px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.profile-block .user-heading p {
+  color: #fff;
+  font-size: 12px;
+  margin-bottom: 0;
+  text-align: center;
+}
+.profile-block ul {
+    display: flex; 
+    flex-direction: column; 
+  }
+  .profile-block ul > li {
+    flex: 1; 
+    border-bottom: 1px solid #ddd;
+    line-height: 30px;
+    margin-top: 0;
+  }
+.profile-block ul > li > a {
+    background: #e7e7e7;
+    border-radius: 0;
+    color: #000;
+    display: block;
+    font-size: 14px;
+    padding: 6px 18px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+  }
+.profile-block ul > li > a > i {
+  color: #000;
+  font-size: 16px;
+  padding-right: 10px;
+}
+.profile-block ul > li > a:hover, 
+.profile-block ul > li > a:focus {
+  background: #000; /* Changing the background color to provide a clear change of state */
+  border-radius: 0;
+  color: #FFFF00; /* Changing the color to yellow for a clear contrast against the black background */
+}
+
