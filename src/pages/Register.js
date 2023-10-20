@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import UserDataService from '../../services/uses.services';
+import UserDataService from '../services/uses.services';
 import { useNavigate,Link } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import Header from '../home/Head';
+import Header from '../components/home/Head';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; // Thêm CSS Bootstrap
 
@@ -16,7 +16,6 @@ export default function Register() {
         lastName: '',
         dob: '',
         address: '',
-        img: '',
     });
 
     const [alertMessage, setAlertMessage] = useState('');

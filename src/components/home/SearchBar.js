@@ -1,29 +1,48 @@
 // SearchBar.js
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import ProductDataService from '../../services/product.services';
 
-const SearchBar = ({ handleSearch }) => {
+const productService = new ProductDataService();
+
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setSearchTerm(e.target.value);
+    const querySnapshot = await productService.searchByTitle(e.target.value);
+    const results = querySnapshot.docs.map(doc => doc.data());
+    setSearchResults(results);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleSearch(searchTerm);
-  };
+  // clear search result when input is clear
+  useEffect(() => {
+    if (searchTerm === '') {
+      setSearchResults([]);
+    }
+  }, [searchTerm]);
 
   return (
-    <form onSubmit={handleSubmit} className="d-flex">
+    <form className="d-flex" role="search">
+      <label htmlFor="search" className="visually-hidden">Product Search</label>
       <input
+        id="search"
         className="form-control me-2"
         type="search"
         placeholder="Search products..."
-        aria-label="Search"
+        aria-label="Product Search"
         value={searchTerm}
         onChange={handleChange}
       />
-      <button className="btn btn-outline-success" type="submit">Search</button>
+      {searchResults.length > 0 && (
+        <div className="search-results-dropdown">
+          {searchResults.map((product, i) => (
+            <div key={i} className="search-result-item">
+              {product.title}
+            </div>
+          ))}
+        </div>
+      )}
     </form>
   );
 };

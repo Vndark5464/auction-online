@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import Header from '../home/Head';
-import { db } from "../../firebase-config";
-import { useAuth } from './AuthContext';
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import Header from '../components/home/Head';
+import { db } from "../firebase-config";
+import { useAuth } from '../components/users/AuthContext';
 
 export default function Login() {
     const firstInputRef = useRef();
@@ -32,12 +33,27 @@ export default function Login() {
         e.preventDefault();
 
         const { email, password } = formData;
+        const db = getFirestore();
 
         signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            setIsLoggedIn(true); // Set isLoggedIn to true
-            setUserData({ lastName: 'example' }); // Set userData with actual data
-            navigate('/');
+        .then(async(userCredential) => {
+
+                // Fetch the user document
+            const docRef = doc(db, 'Users', userCredential.user.uid);
+            const docSnap = await getDoc(docRef);
+            
+            if (docSnap.exists()) {
+                // Use spread operator to get all fields, preserving original document structure
+                const userData = { ...docSnap.data() };
+                
+                // Set the last name to the one in the database
+                setUserData({ lastName: userData.lastName });
+              } else {
+                console.log("No such document!");
+              }
+              
+              setIsLoggedIn(true); 
+              navigate('/');  
             })
             .catch((error) => {
                 setAlertMessage(error.message);

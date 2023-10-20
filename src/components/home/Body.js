@@ -1,10 +1,12 @@
 import React from "react";
+import ProductList from "../products/AuctionProductList";
 
 function Body() {
     function goToPage2() {
         
     }
     return(
+        <>
     <body id="body-body">
         <div className="hero-area hero-style-three">
             <img alt="Banner image" src="https://www.vietnamfineart.com.vn/wp-content/uploads/2023/03/hinh-anh-anime-buon_103502006.jpg" className="home3-banner img-fluid" style={{height: '550px', objectFit: 'contain', minWidth: '50%'}}/>
@@ -29,6 +31,8 @@ function Body() {
         </div>
       </div>
       </body>
+      <ProductList />
+      </>
     );
 }
 

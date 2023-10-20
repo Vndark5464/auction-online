@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import Header from '../home/Head';
+import Header from '../components/home/Head';
 
 export default function ForgotPassword() {
     const [formData, setFormData] = useState({
