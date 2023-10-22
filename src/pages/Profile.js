@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc,setDoc } from 'firebase/firestore';
 import Header from '../components/home/Head';
 import "../assets/css/style.css";
 import { getAuth } from 'firebase/auth';
@@ -47,16 +47,19 @@ const UserProfile = () => {
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-
+  
     reader.onload = (e) => {
       const imageSrc = e.target.result;
       setUploadedImage(imageSrc);
     }
-
+  
     if (file) {
       reader.readAsDataURL(file);
       if (currentUser) {
-        await uploadImage(file, currentUser.uid, 'profile_images');
+        const imageUrl = await uploadImage(file, currentUser.uid, 'profile_images');
+        const db = getFirestore();
+        const userDocRef = doc(db, 'Users', currentUser.uid);
+        await setDoc(userDocRef, { profileImageURL: imageUrl }, { merge: true });
       }
     }
   }
@@ -76,7 +79,7 @@ const UserProfile = () => {
               <div className="card-body text-center">
                 <img
                   className="img-account-profile rounded-circle mb-2"
-                  src={uploadedImage || "http://bootdey.com/img/Content/avatar/avatar1.png"}
+                  src={userDetails?.profileImageURL || "http://bootdey.com/img/Content/avatar/avatar1.png"}
                   alt=""
                 />
                 <div className="small font-italic text-muted mb-4">

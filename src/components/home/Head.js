@@ -53,9 +53,14 @@ function Header() {
 
               {isLoggedIn ? (
                 <li className="nav-item dropdown">
-                  <Link className="nav-link dropdown-toggle text-white" to="#" id="navbarDropdown" role="menuitem" data-bs-toggle="dropdown" aria-expanded="false">
-                    {userData ? `Xin chào, ${userData.lastName}` : 'Xin chào'}
-                  </Link>
+                <Link className="nav-link dropdown-toggle text-white" to="#" id="navbarDropdown" role="menuitem" data-bs-toggle="dropdown" aria-expanded="false">
+                <img
+                  src={userData?.profileImageURL || "http://bootdey.com/img/Content/avatar/avatar1.png"}
+                  alt="User Avatar"
+                  width="30" // Bạn có thể điều chỉnh kích thước ảnh theo ý muốn
+                  className="rounded-circle"
+                />
+                </Link>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li>
                       <Link to="/user-profile" className="dropdown-item">
