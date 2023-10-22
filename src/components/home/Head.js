@@ -1,4 +1,4 @@
-import React, { useRef,useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logoABC from '../../assets/img/logo_abc _.jpg';
 import ServerTimeClock from '../ServerTimeClock';
@@ -6,16 +6,15 @@ import SearchBar from './SearchBar';
 import { useAuth } from '../users/AuthContext';
 import { Dropdown } from 'bootstrap';
 
-
 function Header() {
-  const { isLoggedIn, userData, setIsLoggedIn, setUserData } = useAuth();
+  const { isLoggedIn, userData, setIsLoggedIn, setUserData, currentUser } = useAuth();
   const searchBarInputRef = useRef(null);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserData(null);
   }
-   useEffect(() => {
+  useEffect(() => {
     let dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
     let dropdownList = dropdownElementList.map(dropdownToggleEl => new Dropdown(dropdownToggleEl))
 
@@ -23,6 +22,20 @@ function Header() {
       dropdownList.map(dropdown => dropdown.dispose());
     }
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      setIsLoggedIn(true);
+      setUserData({
+        // ... other user data you want to set
+        lastName: currentUser.displayName || 'User'
+      });
+    } else {
+      setIsLoggedIn(false);
+      setUserData(null);
+    }
+  }, [currentUser]);
+  
 
   return (
     <header id='head-head' role="banner" className="p-3 bg-dark text-white">

@@ -19,7 +19,6 @@ export default function Register() {
     });
 
     const [alertMessage, setAlertMessage] = useState('');
-    const userService = new UserDataService();
     const navigate = useNavigate();
     const auth = getAuth();
 
@@ -33,23 +32,21 @@ export default function Register() {
 
     const registerUser = async (e) => {
         e.preventDefault();
-        const userSnapshot = await userService.getAllUser();
-        const { email,password,confirmPassword, ...restFormData } = formData;
-
-
+        const { email, password, confirmPassword, ...restFormData } = formData;
+    
         if (password !== confirmPassword) {
             setAlertMessage('Passwords do not match');
             return;
         }
-
-
+    
         createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
-            const uid = userCredential.user.uid; // Lấy UID từ Firebase Authentication
+            const uid = userCredential.user.uid;
             sendEmailVerification(userCredential.user)
                 .then(async () => {
-                    await userService.addUsers(uid, { // Sử dụng UID làm ID cho document
+                    await UserDataService.addUsers(uid,{ // Sử dụng UserDataService trực tiếp
                         ...restFormData,
+                        uid: uid, // Thêm uid vào đối tượng
                         img: formData.img || null
                     });
                     navigate('/login');
@@ -62,6 +59,7 @@ export default function Register() {
             setAlertMessage(error.message);
         });
     };
+    
 
     useEffect(() => {
         if (alertMessage) {

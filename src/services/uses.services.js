@@ -5,9 +5,9 @@ import {
     getDocs,
     deleteDoc,
     doc,
-    addDoc,
     updateDoc,
-    getDoc
+    getDoc,
+    setDoc
 } from "firebase/firestore";
 
 const userCollectionRef = collection(db,"Users");
@@ -21,8 +21,9 @@ class UserDataService {
         const useDoc = doc(db,"Users",id);
         return deleteDoc(useDoc);
     };
-    addUsers = (newUser) => {
-        return addDoc(userCollectionRef,newUser);
+    addUsers = (uid,newUser) => {
+        const userDocRef = doc(db,"Users",uid);
+        return setDoc(userDocRef,newUser);
     };
     updateUser = (id,updateUser) => {
         const useDoc = doc(db,"Users",id);

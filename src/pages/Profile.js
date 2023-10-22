@@ -12,8 +12,18 @@ const UserProfile = () => {
 
   useEffect(() => {
     const auth = getAuth();
-    setCurrentUser(auth.currentUser);
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+    });
+  
+    // Cleanup the listener on component unmount
+    return () => unsubscribe();
   }, []);
+  
 
   useEffect(() => {
     
