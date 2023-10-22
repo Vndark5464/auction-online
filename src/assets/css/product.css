@@ -3,10 +3,10 @@
 }
 
 .product-card {
-  display: inline-flex; 
+  display: flex; /* Sử dụng Flexbox để sắp xếp nội dung */
   border: 1px solid #ddd;
   padding: 10px;
-  width: 30%; 
+  width: 500px; /* Để có 2 sản phẩm trên mỗi hàng, đặt chiều rộng là 45% và đặt margin để tạo khoảng cách */
   margin: 10px;
 }
 

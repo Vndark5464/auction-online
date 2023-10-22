@@ -38,9 +38,11 @@ class ProductDataService {
         return getDoc(productDoc);
     };    
 
-    searchByTitle = (title) => {
-        const queryRef = query(productCollectionRef, where("title", "==", title));
-        return getDocs(queryRef);
+
+    async searchProductByTitle(title) {
+        const productsRef = collection(db, 'products');
+        const querySnapshot = await getDocs(query(productsRef, where('title', '==', title)));
+        return querySnapshot;
     }
 }
 export default ProductDataService;
