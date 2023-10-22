@@ -62,6 +62,8 @@ function Header() {
                 />
                 </Link>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li className='dropdown-item'>{userData ? userData.lastName : ''}</li>
+                  <br/>
                     <li>
                       <Link to="/user-profile" className="dropdown-item">
                         User Profile
