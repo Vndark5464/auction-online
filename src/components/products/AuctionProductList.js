@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ProductDataService from '../../services/product.services';
 import Header from "../home/Head";
+import unidecode from "unidecode";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -30,12 +31,13 @@ const ProductList = () => {
         }
     
         try {
-            const filteredProducts = allProducts.filter(product => {
-                // Kiểm tra xem product.title tồn tại và không phân biệt hoa thường
-                const lowercaseTitle = (product.title || '').toLowerCase();
-                const lowercaseSearchTerm = searchTerm.toLowerCase();
+            const searchTermWithoutDiacritics = unidecode(searchTerm).toLowerCase();
     
-                return lowercaseTitle.includes(lowercaseSearchTerm);
+            const filteredProducts = allProducts.filter(product => {
+                // Chuyển đổi title thành chữ thường và bỏ qua dấu
+                const lowercaseTitle = unidecode((product.title || '')).toLowerCase();
+    
+                return lowercaseTitle.includes(searchTermWithoutDiacritics);
             });
     
             setProducts(filteredProducts);
@@ -43,7 +45,6 @@ const ProductList = () => {
             console.error("Error searching products:", error);
         }
     };
-    
     
     return (
         <>
@@ -69,9 +70,9 @@ const ProductList = () => {
                         </button>
                     </div>
                 </div>
-
+                <div className="col"></div>
                 {products.map(product => (
-                    <div className="col" key={product.id}>
+                    <div  key={product.id}>
                         <ProductCard product={product} />
                     </div>
                 ))}
