@@ -36,9 +36,9 @@ const SearchBar = () => {
       />
       {searchResults.length > 0 && (
         <div className="search-results-dropdown">
-          {searchResults.map((product, i) => (
+          {searchResults.map((products, i) => (
             <div key={i} className="search-result-item">
-              {product.title}
+              {products.title}
             </div>
           ))}
         </div>
