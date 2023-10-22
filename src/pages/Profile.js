@@ -60,9 +60,39 @@ const UserProfile = () => {
         const db = getFirestore();
         const userDocRef = doc(db, 'Users', currentUser.uid);
         await setDoc(userDocRef, { profileImageURL: imageUrl }, { merge: true });
+        setUserDetails(prevDetails => ({
+          ...prevDetails,
+          profileImageURL: imageUrl
+        }));
       }
     }
   }
+
+  const handleUpdateUserData = async () => {
+    if (!currentUser) return;
+  
+    const updatedData = {
+      username: document.getElementById('inputUsername').value,
+      firstName: document.getElementById('inputFirstName').value,
+      lastName: document.getElementById('inputLastName').value,
+      address: document.getElementById('inputOrgName').value,
+      dob: document.getElementById('inputBirthday').value,
+    };
+  
+    const db = getFirestore();
+    const userDocRef = doc(db, 'Users', currentUser.uid);
+    await setDoc(userDocRef, updatedData, { merge: true });
+  
+    // Cập nhật trạng thái userDetails
+    setUserDetails(prevDetails => ({
+      ...prevDetails,
+      ...updatedData
+    }));
+
+    alert('Thông tin của bạn đã được cập nhật thành công!');
+    window.location.reload();
+  };
+  
   return (
     <>
       <Header />
@@ -79,7 +109,7 @@ const UserProfile = () => {
               <div className="card-body text-center">
                 <img
                   className="img-account-profile rounded-circle mb-2"
-                  src={userDetails?.profileImageURL || "http://bootdey.com/img/Content/avatar/avatar1.png"}
+                  src={userDetails?.profileImageURL }
                   alt=""
                 />
                 <div className="small font-italic text-muted mb-4">
@@ -190,7 +220,7 @@ const UserProfile = () => {
                       />
                     </div>
                   </div>
-                  <button className="btn btn-primary" type="button">
+                  <button className="btn btn-primary" type="button" onClick={handleUpdateUserData}>
                     Save changes
                   </button>
                 </form>

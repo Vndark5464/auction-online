@@ -16,6 +16,7 @@ export default function Register() {
         lastName: '',
         dob: '',
         address: '',
+        phonenumber: '',
     });
 
     const [alertMessage, setAlertMessage] = useState('');
@@ -47,7 +48,6 @@ export default function Register() {
                     await UserDataService.addUsers(uid,{ // Sử dụng UserDataService trực tiếp
                         ...restFormData,
                         uid: uid, // Thêm uid vào đối tượng
-                        img: formData.img || null
                     });
                     navigate('/login');
                 })

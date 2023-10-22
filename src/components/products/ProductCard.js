@@ -8,15 +8,23 @@ const ProductCard = ({ product }) => {
     useEffect(() => {
         // Method to calculate and update the time remaining
         const calculateTimeRemaining = () => {
-            const endTime = new Date(product.endTime);
-            const now = new Date();
-            const timeRemainingInMilliseconds = endTime - now;
+            if (product.endTime) {
+                const endTime = new Date(product.endTime);
+                const now = new Date();
+                const timeRemainingInMilliseconds = endTime - now;
 
-            const hours = Math.floor(timeRemainingInMilliseconds / 1000 / 60 / 60);
-            const minutes = Math.floor(timeRemainingInMilliseconds / 1000 / 60) % 60;
-            const seconds = Math.floor(timeRemainingInMilliseconds / 1000) % 60;
+                if (timeRemainingInMilliseconds <= 0) {
+                    setTimeRemaining('Auction ended');
+                } else {
+                    const hours = Math.floor(timeRemainingInMilliseconds / 1000 / 60 / 60);
+                    const minutes = Math.floor(timeRemainingInMilliseconds / 1000 / 60) % 60;
+                    const seconds = Math.floor(timeRemainingInMilliseconds / 1000) % 60;
 
-            setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+                    setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+                }
+            } else {
+                setTimeRemaining('Auction time not available');
+            }
         };
 
         // Call calculateTimeRemaining immediately and every second afterwards 
@@ -34,15 +42,16 @@ const ProductCard = ({ product }) => {
             </div>
             <div className="product-info">
                 <h3 className="product-title">{product.title}</h3>
-                <p className="product-description">{product.description}</p>
+                <p className="product-description">{product.excerpt || "No description available"}</p>
                 <div className="product-foot">
                     <span className="product-price">{product.price}</span>                 
                 </div>
                 <div className="product-foot">
-                <span className="product-time-remaining">{timeRemaining} left for bidding</span>
+                    <span className="product-time-remaining">{timeRemaining}</span>
                 </div>
             </div>
         </div>
+
     );
 };
 

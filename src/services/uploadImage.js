@@ -9,7 +9,7 @@ const uploadImage = async (file, userId, folderName) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // You can handle progress here if you want
+
       },
       (error) => {
         // Handle unsuccessful uploads

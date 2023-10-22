@@ -1,15 +1,13 @@
-import React, { useRef,useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logoABC from '../../assets/img/logo_abc _.jpg';
 import ServerTimeClock from '../ServerTimeClock';
-import SearchBar from './SearchBar';
 import { useAuth } from '../users/AuthContext';
 import { Dropdown } from 'bootstrap';
 
 
 function Header() {
   const { isLoggedIn, userData, setIsLoggedIn, setUserData } = useAuth();
-  const searchBarInputRef = useRef(null);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -32,7 +30,6 @@ function Header() {
             <img className="logo-abc" src={logoABC} alt="Logo of Your Website Name" width="50px" height="50px" aria-label="Home" />
             <ServerTimeClock />
           </Link>
-          <SearchBar inputRef={searchBarInputRef} />
           <nav className='menu' role="navigation" aria-label="main navigation">
             <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
               <li>
@@ -54,10 +51,10 @@ function Header() {
               {isLoggedIn ? (
                 <li className="nav-item dropdown">
                 <Link className="nav-link dropdown-toggle text-white" to="#" id="navbarDropdown" role="menuitem" data-bs-toggle="dropdown" aria-expanded="false">
-                <img
-                  src={userData?.profileImageURL || "http://bootdey.com/img/Content/avatar/avatar1.png"}
+                <img 
+                  src={userData?.profileImageURL}
                   alt="User Avatar"
-                  width="30" // Bạn có thể điều chỉnh kích thước ảnh theo ý muốn
+                  width="30" 
                   className="rounded-circle"
                 />
                 </Link>
