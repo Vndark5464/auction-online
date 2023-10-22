@@ -24,8 +24,6 @@ class UserDataService {
     addUsers = (newUser) => {
         return addDoc(userCollectionRef,newUser);
     };
-
-
     updateUser = (id,updateUser) => {
         const useDoc = doc(db,"Users",id);
         return updateDoc(useDoc,updateUser);
@@ -36,4 +34,4 @@ class UserDataService {
         return getDoc(useDoc);
     }    
 }
-export default UserDataService;
+export default new UserDataService;

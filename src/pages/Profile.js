@@ -1,11 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Header from '../components/home/Head';
 import "../assets/css/style.css";
+import { getAuth } from 'firebase/auth';
+import uploadImage from '../services/uploadImage';
 
 const UserProfile = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
 
-  const handleImageUpload = (event) => {
+  useEffect(() => {
+    const auth = getAuth();
+    setCurrentUser(auth.currentUser);
+  }, []);
+
+  useEffect(() => {
+    
+    const fetchUserData = async () => {
+      if (currentUser) {
+        const db = getFirestore();
+        const userDoc = doc(db, 'Users', currentUser.uid);
+        console.log("Fetching data for user:", currentUser.uid); 
+        const userSnapshot = await getDoc(userDoc);
+        console.log("Fetched data:", userSnapshot.exists())
+        if (userSnapshot.exists()) {
+          console.log("Data from Firestore:", userSnapshot.data());
+          setUserDetails(userSnapshot.data());
+        }
+      }
+    };
+  
+    fetchUserData();
+  }, [currentUser]);
+
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
 
@@ -16,9 +45,11 @@ const UserProfile = () => {
 
     if (file) {
       reader.readAsDataURL(file);
+      if (currentUser) {
+        await uploadImage(file, currentUser.uid, 'profile_images');
+      }
     }
   }
-
   return (
     <>
       <Header />
@@ -54,18 +85,17 @@ const UserProfile = () => {
               <div className="card-header">Account Details</div>
               <div className="card-body">
                 <form>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputUsername">
-                      Username (how your name will appear to other users on the
-                      site)
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputUsername"
-                      type="text"
-                      placeholder="Enter your username"
-                      defaultValue="username"
-                    />
+                <div className="mb-3">
+                  <label className="small mb-1" htmlFor="inputUsername">
+                    Username (how your name will appear to other users on the site)
+                  </label>
+                  <input
+                    className="form-control"
+                    id="inputUsername"
+                    type="text"
+                    placeholder="Enter your username"
+                    defaultValue={userDetails ? userDetails.username : ''}
+                  />
                   </div>
                   <div className="row gx-3 mb-3">
                     <div className="col-md-6">
@@ -77,7 +107,7 @@ const UserProfile = () => {
                         id="inputFirstName"
                         type="text"
                         placeholder="Enter your first name"
-                        defaultValue="First Name"
+                        defaultValue={userDetails ? userDetails.firstName : ''}
                       />
                     </div>
                     <div className="col-md-6">
@@ -89,7 +119,7 @@ const UserProfile = () => {
                         id="inputLastName"
                         type="text"
                         placeholder="Enter your last name"
-                        defaultValue="Last Name"
+                        defaultValue={userDetails ? userDetails.lastName : ''}
                       />
                     </div>
                   </div>
@@ -103,34 +133,23 @@ const UserProfile = () => {
                         id="inputOrgName"
                         type="text"
                         placeholder="Enter your organization name"
-                        defaultValue="Address 1"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="inputLocation">
-                        Location 2
-                      </label>
-                      <input
-                        className="form-control"
-                        id="inputLocation"
-                        type="text"
-                        placeholder="Enter your location"
-                        defaultValue="Address 2"
+                        defaultValue={userDetails ? userDetails.address : ''}
                       />
                     </div>
                   </div>
                   <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputEmailAddress">
-                      Email address
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputEmailAddress"
-                      type="email"
-                      placeholder="Enter your email address"
-                      defaultValue="name@example.com"
-                    />
-                  </div>
+                  <label className="small mb-1" htmlFor="inputEmailAddress">
+                    Email address
+                  </label>
+                  <input
+                    className="form-control"
+                    id="inputEmailAddress"
+                    type="email"
+                    placeholder="Enter your email address"
+                    defaultValue={currentUser ? currentUser.email : ''}
+                    readOnly
+                  />
+                </div>
                   <div className="row gx-3 mb-3">
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="inputPhone">
@@ -154,7 +173,7 @@ const UserProfile = () => {
                         type="text"
                         name="birthday"
                         placeholder="Enter your birthday"
-                        defaultValue="Birth Day"
+                        defaultValue={userDetails ? userDetails.dob : ''}
                       />
                     </div>
                   </div>

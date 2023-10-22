@@ -42,14 +42,13 @@ export default function Register() {
             return;
         }
 
-        const users = userSnapshot.docs.map(doc => doc.data());
-        const userExists = users.find(user => user.username === formData.username);
 
         createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
+            const uid = userCredential.user.uid; // Lấy UID từ Firebase Authentication
             sendEmailVerification(userCredential.user)
                 .then(async () => {
-                    await userService.addUsers({
+                    await userService.addUsers(uid, { // Sử dụng UID làm ID cho document
                         ...restFormData,
                         img: formData.img || null
                     });
