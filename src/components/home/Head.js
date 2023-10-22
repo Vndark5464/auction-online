@@ -1,26 +1,29 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoABC from '../../assets/img/logo_abc _.jpg';
 import ServerTimeClock from '../ServerTimeClock';
 import SearchBar from './SearchBar';
 import { useAuth } from '../users/AuthContext';
 import { Dropdown } from 'bootstrap';
+import { getAuth } from "firebase/auth";
 
 function Header() {
-  const { isLoggedIn, userData, setIsLoggedIn, setUserData, currentUser } = useAuth();
+  const { isLoggedIn, userData, setIsLoggedIn, setUserData } = useAuth();
+  const [currentUser, setCurrentUser] = useState(null);
   const searchBarInputRef = useRef(null);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserData(null);
   }
-  useEffect(() => {
-    let dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
-    let dropdownList = dropdownElementList.map(dropdownToggleEl => new Dropdown(dropdownToggleEl))
 
-    return () => {
-      dropdownList.map(dropdown => dropdown.dispose());
-    }
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setCurrentUser(user);
+    });
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -35,7 +38,8 @@ function Header() {
       setUserData(null);
     }
   }, [currentUser]);
-  
+
+  // ... (rest of the code remains unchanged)
 
   return (
     <header id='head-head' role="banner" className="p-3 bg-dark text-white">
