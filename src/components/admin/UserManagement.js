@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
+import MenuAdmin from './menu-admin';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -25,6 +26,10 @@ const UserManagement = () => {
   };
 
   return (
+    <>
+    <div className="container mt-5">
+             <MenuAdmin />
+      </div>
     <div className="container mt-5">
       <h1>Quản lý người dùng</h1>
       <div className="mb-4">
@@ -51,7 +56,7 @@ const UserManagement = () => {
         <tbody>
           {users.map(user => (
             <tr key={user.id}>
-              <td><img src={user.photoURL} alt={user.username} width="50" /></td>
+              <td><img src={user.profileImageURL} alt={user.username} width="50" /></td>
               <td>{user.id}</td>
               <td>{user.username}</td>
               <td>{user.email}</td>
@@ -65,6 +70,7 @@ const UserManagement = () => {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
 
