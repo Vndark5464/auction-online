@@ -4,6 +4,7 @@ import Header from '../home/Head';
 import { getAuth } from 'firebase/auth';
 import uploadImage from '../../services/uploadImage';
 import { useAuth } from '../users/AuthContext';
+import UserDataService from '../../services/uses.services';
 
 const UploadProduct = () => {
   const [product, setProduct] = useState({
@@ -33,6 +34,19 @@ const UploadProduct = () => {
 
     return true;
 };
+    useEffect(() => {
+        const fetchUsername = async () => {
+        if (userId) {
+            const userDoc = await UserDataService.getUser(userId);
+            if (userDoc.exists()) {
+            setSellerName(userDoc.data().username);
+            }
+        }
+        };
+    
+        fetchUsername();
+    }, [userId]);
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -75,7 +89,7 @@ const UploadProduct = () => {
       const productToSave = {
         ...product,
         imageSrc: imageUrl,
-        sellerName: userData.username // Thêm thông tin username vào đây
+        sellerName: userData ? userData.username : ""
       };
       
 

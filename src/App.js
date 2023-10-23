@@ -7,6 +7,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import UserProfile from './pages/Profile';
 import AuctionProductList from './components/products/AuctionProductList';
 import UploadProduct from './components/products/UploadProduct';
+import Admin from './components/admin/admin';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/products" element={<AuctionProductList />} />
         <Route path="/upload-products" element={<UploadProduct />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   );
