@@ -34,27 +34,31 @@ const ProductManagement = () => {
     }, [searchTerm, allProducts]);
 
     const handleDelete = async (productId) => {
-        // Xóa sản phẩm từ cơ sở dữ liệu
-        await deleteDoc(doc(db, 'products', productId));
+        const productToDelete = allProducts.find(p => p.id === productId);
+        
+        if (!productToDelete || !productToDelete.userId) {
+            console.error("Product not found or doesn't have a userId");
+            return;
+        }
     
-        // Lấy thông tin sản phẩm
-        const productDoc = await getDoc(doc(db, 'products', productId));
-        const productData = productDoc.data();
+        // Xóa sản phẩm
+        await deleteDoc(doc(db, 'products', productId)); 
     
         // Tạo thông báo mới cho người dùng
         const notification = {
-            userId: productData.userId, // giả định mỗi sản phẩm có trường userId để xác định người dùng đã tải lên
-            message: "Admin đã xóa sản phẩm của bạn do vi phạm chính sách",
+            userId: productToDelete.userId, // Sử dụng thông tin từ productToDelete
+            message: `Admin đã xóa sản phẩm ${productToDelete.title} của bạn do vi phạm chính sách`,
             read: false,
             timestamp: new Date()
         };
     
         await addDoc(collection(db, 'notifications'), notification);
     
-        setProducts(products.filter(product => product.id !== productId));
+        const updatedProducts = allProducts.filter(product => product.id !== productId);
+        setAllProducts(updatedProducts);
+        setDisplayedProducts(updatedProducts);
     };
     
-
     return (
         <>
         <div className="container mt-5">

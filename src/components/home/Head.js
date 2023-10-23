@@ -4,6 +4,7 @@ import logoABC from '../../assets/img/logo_abc _.jpg';
 import ServerTimeClock from '../ServerTimeClock';
 import { useAuth } from '../users/AuthContext';
 import { Dropdown } from 'bootstrap';
+import Notification from './Notification';
 
 
 function Header() {
@@ -42,10 +43,8 @@ function Header() {
                   About
                 </Link>
               </li>
-              <li>
-                <Link to="/notification" className="nav-link text-white">
-                  Notification
-                </Link>
+              <li className="nav-link text-white">
+                  <Notification />
               </li>
 
               {isLoggedIn ? (

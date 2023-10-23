@@ -89,9 +89,9 @@ const UploadProduct = () => {
       const productToSave = {
         ...product,
         imageSrc: imageUrl,
-        sellerName: userData ? userData.username : ""
+        sellerName: userData ? userData.username : "",
+        userId: userId  // Thêm trường userId vào dữ liệu sản phẩm
       };
-      
 
       const productDataService = new ProductDataService();
       await productDataService.addProduct(productToSave);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs ,query,where} from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 import { db } from '../../firebase-config';
 import "../../assets/css/notification.css";
 import { auth } from '../../firebase-config';
@@ -11,25 +12,29 @@ const Notification = () => {
 
     useEffect(() => {
         const fetchNotifications = async () => {
-            const notificationCollection = collection(db, 'notifications');
-            const notificationQuery = query(notificationCollection, where('userId', '==', currentUser.id)); // giả định bạn có trạng thái currentUser
-            const notificationDocs = await getDocs(notificationQuery);
-            const fetchedNotifications = notificationDocs.docs.map(doc => doc.data());
-            setNotifications(fetchedNotifications);
+            if (currentUser && currentUser.uid) {
+                const notificationCollection = collection(db, 'notifications');
+                const notificationQuery = query(notificationCollection, where('userId', '==', currentUser.uid));
+                const notificationDocs = await getDocs(notificationQuery);
+                const fetchedNotifications = notificationDocs.docs.map(doc => doc.data());
+                setNotifications(fetchedNotifications);
+            }
         };
     
         fetchNotifications();
-    }, []);
+    }, [currentUser]);
+    
+    
     
 
     const hasUnreadNotifications = notifications.some(notification => !notification.read);
 
     return (
         <div className="notification-container">
-            <div className="notification-icon" onClick={() => setIsOpen(!isOpen)}>
-                Notification
-                {hasUnreadNotifications && <span className="notification-dot"></span>}
-            </div>
+        <Link to="/notification-page" className="notification-icon" onClick={() => setIsOpen(!isOpen)}>
+            Notification
+            {hasUnreadNotifications && <span className="notification-dot"></span>}
+        </Link>
 
             {isOpen && (
                 <div className="notification-list">
