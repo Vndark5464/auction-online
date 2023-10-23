@@ -10,6 +10,7 @@ import {
     getDoc,
     query,
     where,
+    setDoc,
 } from "firebase/firestore";
 
 const productCollectionRef = collection(db,"products");
@@ -44,5 +45,6 @@ class ProductDataService {
         const querySnapshot = await getDocs(query(productsRef, where('title', '==', title)));
         return querySnapshot;
     }
+
 }
 export default ProductDataService;

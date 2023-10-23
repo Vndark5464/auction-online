@@ -15,6 +15,8 @@ const UploadProduct = () => {
   });
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [sellerName, setSellerName] = useState(""); // Tên người đăng sản phẩm
+
 
   const isAuctionTimeValid = () => {
     const now = new Date();
@@ -34,8 +36,10 @@ const UploadProduct = () => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         setUserId(user.uid); // Lưu ID của người dùng đăng nhập
+        setSellerName(user.displayName); // Lưu tên người đăng sản phẩm
       } else {
         setUserId(null); // Reset ID nếu không có người dùng đăng nhập
+        setSellerName(""); // Reset tên người đăng
       }
     });
 
@@ -68,7 +72,8 @@ const UploadProduct = () => {
       const imageUrl = await uploadImage(product.imageSrc, userId, 'products');
       const productToSave = {
         ...product,
-        imageSrc: imageUrl
+        imageSrc: imageUrl,
+        sellerName:sellerName
       };
 
       const productDataService = new ProductDataService();
