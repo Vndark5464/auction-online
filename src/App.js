@@ -10,6 +10,7 @@ import UploadProduct from './components/products/UploadProduct';
 import Admin from './components/admin/admin';
 import UserManagement from './components/admin/UserManagement';
 import ProductManagement from './components/admin/ProductManagement';
+import Notification from './components/home/Notification';
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/user-management" element={<UserManagement />} />
         <Route path="/admin/product-management" element={<ProductManagement />} />
+        <Route path="/notification" element={<Notification />} />
       </Routes>
     </Router>
   );
