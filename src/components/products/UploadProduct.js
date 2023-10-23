@@ -3,6 +3,7 @@ import ProductDataService from '../../services/product.services';
 import Header from '../home/Head';
 import { getAuth } from 'firebase/auth';
 import uploadImage from '../../services/uploadImage';
+import { useAuth } from '../users/AuthContext';
 
 const UploadProduct = () => {
   const [product, setProduct] = useState({
@@ -15,6 +16,7 @@ const UploadProduct = () => {
   });
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const { userData } = useAuth();
   const [sellerName, setSellerName] = useState(""); // Tên người đăng sản phẩm
 
 
@@ -73,8 +75,9 @@ const UploadProduct = () => {
       const productToSave = {
         ...product,
         imageSrc: imageUrl,
-        sellerName:sellerName
+        sellerName: userData.username // Thêm thông tin username vào đây
       };
+      
 
       const productDataService = new ProductDataService();
       await productDataService.addProduct(productToSave);
