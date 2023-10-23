@@ -17,7 +17,7 @@ const MenuAdmin = () => {
                             <Link className="nav-link" to="/admin/user-management">Quản lý người dùng</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/admin/home">Quản lý sản phẩm</Link>
+                            <Link className="nav-link" to="/admin/product-management">Quản lý sản phẩm</Link>
                         </li>
                     </ul>
                 </div>
