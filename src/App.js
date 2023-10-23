@@ -8,6 +8,7 @@ import UserProfile from './pages/Profile';
 import AuctionProductList from './components/products/AuctionProductList';
 import UploadProduct from './components/products/UploadProduct';
 import Admin from './components/admin/admin';
+import UserManagement from './components/admin/UserManagement';
 
 const App = () => {
 
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/products" element={<AuctionProductList />} />
         <Route path="/upload-products" element={<UploadProduct />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/user-management" element={<UserManagement />} />
       </Routes>
     </Router>
   );
