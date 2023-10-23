@@ -37,13 +37,7 @@ export default function Login() {
 
         signInWithEmailAndPassword(auth, email, password)
         .then(async(userCredential) => {
-            if (email === "admin5464@admin.com") {
-                navigate('/admin');  // Chuyển hướng đến trang quản lý
-            } else {
-                navigate('/');  // Chuyển hướng đến trang chính
-            }
-
-                // Fetch the user document
+            // Fetch the user document
             const docRef = doc(db, 'Users', userCredential.user.uid);
             const docSnap = await getDoc(docRef);
             
@@ -53,17 +47,23 @@ export default function Login() {
                 
                 // Set the last name to the one in the database
                 setUserData({ lastName: userData.lastName });
-              } else {
+            } else {
                 console.log("No such document!");
-              }
-              
-              setIsLoggedIn(true); 
-              navigate('/');  
-            })
-            .catch((error) => {
-                setAlertMessage(error.message);
-            });
-    };
+            }
+            
+            setIsLoggedIn(true); 
+        
+            // Kiểm tra xem người dùng có phải là admin không
+            if (email === "admin5464@admin.com") {
+                navigate('/admin');  // Chuyển hướng đến trang quản lý
+            } else {
+                navigate('/');  // Chuyển hướng đến trang chính
+            }
+        })
+        .catch((error) => {
+            setAlertMessage(error.message);
+        });
+    }        
 
     return (
         <>
