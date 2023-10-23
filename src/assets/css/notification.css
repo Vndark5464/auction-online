@@ -34,3 +34,6 @@
 .notification-item.unread {
     background-color: #f5f5f5;
 }
+.notification-icon {
+    text-decoration: none;
+}
