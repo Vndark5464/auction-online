@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import ProductDataService from '../../services/product.services';
 import Header from "../home/Head";
+import Footer from "../home/Footer";
 import unidecode from "unidecode";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [allProducts, setAllProducts] = useState([]); // Lưu trữ tất cả sản phẩm ban đầu
+    const navigate = useNavigate();
 
     useEffect(() => {
         const productDataService = new ProductDataService();
@@ -45,12 +48,18 @@ const ProductList = () => {
             console.error("Error searching products:", error);
         }
     };
+    const handleClick = () => {
+        navigate('/upload-products');
+    };
     
     return (
         <>
         <Header />
+        
         <div className="container-xl px-4 mt-4">
+        <button id="button-product" onClick={handleClick}>Upload Product</button>
             <div className="row row-cols-1 row-cols-md-2 g-4">
+            
                 <div className="col">
                     <h2 className="mb-3">Danh sách sản phẩm đấu giá</h2>
                     <div className="input-group mb-3">
@@ -79,6 +88,7 @@ const ProductList = () => {
 
             </div>
         </div>
+        <Footer />
         </>
     );
 };

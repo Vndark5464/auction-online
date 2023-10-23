@@ -1,10 +1,11 @@
 import React from 'react';
+import '../../assets/css/footer.css';
 
 const Footer = () => {
     return (
         <footer className="blockcode">
         <div className="page-footer shadow">
-            <div className="d-flex flex-column mx-auto py-5" style={{width: '80%'}}>
+            <div className=" mx-auto " style={{width: '80%'}}>
             <div className="d-flex flex-wrap justify-content-between">
                 <div>
                 <p className="my-3" style={{width: '250px'}}>
@@ -56,7 +57,7 @@ const Footer = () => {
                 </ul>
                 </div>
             </div>
-            <small className="text-center mt-5">&copy; ABC Auction, 2020. All rights reserved.</small>
+            <small className="text-footer-center">&copy; ABC Auction, 2020. All rights reserved.</small>
             </div>
         </div>
         </footer>

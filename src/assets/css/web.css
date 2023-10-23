@@ -24,7 +24,7 @@
     position: sticky;
     top: 0;
     z-index: 100; /* Optional: This ensures the header always appears on top of other page elements */
-    background-color: white; /* Optional: Replace with the background color of your choice */
+    background-color: rgb(0, 0, 0); /* Optional: Replace with the background color of your choice */
     width: 100%;
 }
 #body-body {

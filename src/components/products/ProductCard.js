@@ -42,12 +42,12 @@ const ProductCard = ({ product }) => {
             </div>
             <div className="product-info">
                 <h3 className="product-title">{product.title}</h3>
-                <p className="product-description">{product.excerpt || "No description available"}</p>
-                <div className="product-foot">
-                    <span className="product-price">{product.price}</span>                 
+                <p className="product-description"><b>Năm:</b> &emsp; {product.excerpt || "No description available"}</p>
+                <div className="product-foot"><b>Giá khởi điểm:</b>
+                    <span className="product-price"> {product.price}</span>                 
                 </div>
                 <div className="product-foot">
-                    <span className="product-time-remaining">{timeRemaining}</span>
+                    <span className="product-time-remaining"><b>Thời gian còn lại:</b> &emsp; {timeRemaining}</span>
                 </div>
             </div>
         </div>

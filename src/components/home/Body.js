@@ -1,5 +1,5 @@
 import React from "react";
-import ProductList from "../products/AuctionProductList";
+
 
 function Body() {
     function goToPage2() {
@@ -31,7 +31,6 @@ function Body() {
         </div>
       </div>
       </body>
-      <ProductList />
       </>
     );
 }
