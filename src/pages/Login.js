@@ -46,7 +46,10 @@ export default function Login() {
                 const userData = { ...docSnap.data() };
                 
                 // Set the last name to the one in the database
-                setUserData({ lastName: userData.lastName });
+                setUserData({
+                    lastName: userData.lastName,
+                    userId: userData.username  // Use the uid from userCredential
+                });
             } else {
                 console.log("No such document!");
             }

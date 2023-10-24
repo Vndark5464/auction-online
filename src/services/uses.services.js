@@ -31,8 +31,7 @@ class UserDataService {
     };
 
     getUser = (id) => {
-        const useDoc = doc(db,"Users",id);
-        return getDoc(useDoc);
-    }    
+        return doc(db,"Users",id); // Trả về DocumentReference
+    }  
 }
 export default new UserDataService;

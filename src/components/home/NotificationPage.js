@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc,query,where } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import Header from './Head';
+import { auth } from '../../firebase-config';
 
 const NotificationPage = () => {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
         const fetchNotifications = async () => {
+            const currentUserUID = auth.currentUser?.uid;
+            if (!currentUserUID) return;
+    
             const notificationCollection = collection(db, 'notifications');
-            const notificationDocs = await getDocs(notificationCollection);
+            const notificationQuery = query(notificationCollection, where('userId', '==', currentUserUID));
+            const notificationDocs = await getDocs(notificationQuery);
             const fetchedNotifications = notificationDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            console.log(fetchedNotifications);
             setNotifications(fetchedNotifications);
         };
-
+    
         fetchNotifications();
     }, []);
 

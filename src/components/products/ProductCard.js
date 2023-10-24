@@ -50,7 +50,7 @@ const ProductCard = ({ product }) => {
                     <span className="product-time-remaining"><b>Thời gian còn lại:</b> &emsp; {timeRemaining}</span>
                 </div>
                 <div className="product-foot">
-                    <b>Người bán:</b> &emsp; {product.sellerName || "Unknown Seller"}
+                    <b>Người bán:</b> &emsp; {product.username || "Unknown Seller"}
                 </div>
 
             </div>

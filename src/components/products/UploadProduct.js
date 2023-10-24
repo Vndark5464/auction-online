@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ProductDataService from '../../services/product.services';
 import Header from '../home/Head';
 import { getAuth } from 'firebase/auth';
+import { getDoc } from 'firebase/firestore';
 import uploadImage from '../../services/uploadImage';
-import { useAuth } from '../users/AuthContext';
 import UserDataService from '../../services/uses.services';
 
 const UploadProduct = () => {
@@ -17,8 +17,9 @@ const UploadProduct = () => {
   });
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const { userData } = useAuth();
-  const [sellerName, setSellerName] = useState(""); // Tên người đăng sản phẩm
+  const [username, setUsername] = useState(null);
+
+
 
 
   const isAuctionTimeValid = () => {
@@ -34,34 +35,31 @@ const UploadProduct = () => {
 
     return true;
 };
-    useEffect(() => {
-        const fetchUsername = async () => {
-        if (userId) {
-            const userDoc = await UserDataService.getUser(userId);
-            if (userDoc.exists()) {
-            setSellerName(userDoc.data().username);
-            }
-        }
-        };
-    
-        fetchUsername();
-    }, [userId]);
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        setUserId(user.uid); // Lưu ID của người dùng đăng nhập
-        setSellerName(user.displayName); // Lưu tên người đăng sản phẩm
-      } else {
-        setUserId(null); // Reset ID nếu không có người dùng đăng nhập
-        setSellerName(""); // Reset tên người đăng
-      }
-    });
+useEffect(() => {
+  const auth = getAuth();
+  const unsubscribe = auth.onAuthStateChanged(user => {
+    if (user) {
+      setUserId(user.uid); // Lưu ID của người dùng đăng nhập
+      fetchUserData(user.uid); // Gọi hàm để truy vấn Firestore
+    } else {
+      setUserId(null); // Reset ID nếu không có người dùng đăng nhập
+      setUsername(null); // Reset username
+    }
+  });
 
-    // Cleanup the listener on component unmount
-    return () => unsubscribe();
-  }, []);
+  // Cleanup the listener on component unmount
+  return () => unsubscribe();
+}, []);
+
+const fetchUserData = async (uid) => {
+  const userDocRef = await UserDataService.getUser(uid); // Sử dụng await ở đây
+  const userDocSnap = await getDoc(userDocRef);
+  if (userDocSnap.exists()) {
+      setUsername(userDocSnap.data().username);
+  }
+};
+
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -89,8 +87,8 @@ const UploadProduct = () => {
       const productToSave = {
         ...product,
         imageSrc: imageUrl,
-        sellerName: userData ? userData.username : "",
-        userId: userId  // Thêm trường userId vào dữ liệu sản phẩm
+        userId: userId ,
+        username: username
       };
 
       const productDataService = new ProductDataService();

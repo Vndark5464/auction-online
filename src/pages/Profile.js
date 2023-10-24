@@ -138,6 +138,7 @@ const UserProfile = () => {
                     type="text"
                     placeholder="Enter your username"
                     defaultValue={userDetails ? userDetails.username : ''}
+                    readOnly
                   />
                   </div>
                   <div className="row gx-3 mb-3">
