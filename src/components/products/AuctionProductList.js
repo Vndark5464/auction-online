@@ -13,16 +13,15 @@ const ProductList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const productDataService = new ProductDataService();
-        productDataService.getAllProduct().then(querySnapshot => {
-            const productsData = querySnapshot.docs.map(doc => ({
-                ...doc.data(), 
-                id: doc.id
-            }));
-            setProducts(productsData);
-            setAllProducts(productsData); // Lưu tất cả sản phẩm ban đầu
+        ProductDataService.getAllProduct().then(querySnapshot => {
+          const productsData = querySnapshot.docs.map(doc => ({
+           ...doc.data(), 
+           id: doc.id
+          }));
+          setProducts(productsData);
+          setAllProducts(productsData);
         }).catch(err => console.error(err));
-    }, []);
+      }, []);
 
     const handleSearch = async (e) => {
         e.preventDefault();

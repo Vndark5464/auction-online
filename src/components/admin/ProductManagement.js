@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc, doc,getDoc,addDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import MenuAdmin from './menu-admin';
+import AdminApprovalPage from './AdminApprovalPage';
 
 const ProductManagement = () => {
     const [allProducts, setAllProducts] = useState([]);
@@ -88,7 +89,7 @@ const ProductManagement = () => {
                             <td><img src={product.imageSrc} alt={product.title} width="50" /></td>
                             <td>{product.title}</td>
                             <td>{product.price}</td>
-                            <td>{product.sellerName}</td>
+                            <td>{product.username}</td>
                             <td>
                                 <button className="btn btn-danger" onClick={() => handleDelete(product.id)}>Xóa</button>
                             </td>
@@ -97,6 +98,7 @@ const ProductManagement = () => {
                 </tbody>
             </table>
         </div>
+        <AdminApprovalPage />
         </>
     );
 }

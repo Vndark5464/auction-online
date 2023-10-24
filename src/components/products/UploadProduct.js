@@ -12,54 +12,35 @@ const UploadProduct = () => {
     excerpt: '',
     price: '',
     imageSrc: null,
-    imageAlt: '',
-    endTime: ''
+    imageAlt: ''
   });
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [username, setUsername] = useState(null);
 
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setUserId(user.uid); // Lưu ID của người dùng đăng nhập
+        fetchUserData(user.uid); // Gọi hàm để truy vấn Firestore
+      } else {
+        setUserId(null); // Reset ID nếu không có người dùng đăng nhập
+        setUsername(null); // Reset username
+      }
+    });
 
+    // Cleanup the listener on component unmount
+    return () => unsubscribe();
+  }, []);
 
-
-  const isAuctionTimeValid = () => {
-    const now = new Date();
-    const selectedEndTime = new Date(product.endTime);
-    const minEndTime = new Date(now.getTime() + 2 * 60 * 60 * 1000); // Thời gian hiện tại + 2 giờ
-
-    // Kiểm tra thời gian đã chọn phải sau thời gian hiện tại và ít nhất cách 2 tiếng
-    if (selectedEndTime <= now || selectedEndTime < minEndTime) {
-        setErrorMessage('Thời gian đấu giá không hợp lệ. Thời gian phải sau thời gian hiện tại và ít nhất cách 2 tiếng.');
-        return false;
+  const fetchUserData = async (uid) => {
+    const userDocRef = await UserDataService.getUser(uid);
+    const userDocSnap = await getDoc(userDocRef);
+    if (userDocSnap.exists()) {
+        setUsername(userDocSnap.data().username);
     }
-
-    return true;
-};
-
-useEffect(() => {
-  const auth = getAuth();
-  const unsubscribe = auth.onAuthStateChanged(user => {
-    if (user) {
-      setUserId(user.uid); // Lưu ID của người dùng đăng nhập
-      fetchUserData(user.uid); // Gọi hàm để truy vấn Firestore
-    } else {
-      setUserId(null); // Reset ID nếu không có người dùng đăng nhập
-      setUsername(null); // Reset username
-    }
-  });
-
-  // Cleanup the listener on component unmount
-  return () => unsubscribe();
-}, []);
-
-const fetchUserData = async (uid) => {
-  const userDocRef = await UserDataService.getUser(uid); // Sử dụng await ở đây
-  const userDocSnap = await getDoc(userDocRef);
-  if (userDocSnap.exists()) {
-      setUsername(userDocSnap.data().username);
-  }
-};
-
+  };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -78,28 +59,26 @@ const fetchUserData = async (uid) => {
         setErrorMessage('User not logged in!');
         return;
     }
-    if (!isAuctionTimeValid()) {
-        return;
-    }
 
     try {
       const imageUrl = await uploadImage(product.imageSrc, userId, 'products');
       const productToSave = {
         ...product,
         imageSrc: imageUrl,
-        userId: userId ,
-        username: username
+        userId: userId,
+        username: username,
+        isApproved: false
       };
 
-      const productDataService = new ProductDataService();
-      await productDataService.addProduct(productToSave);
+      // change this line - directly use the ProductDataService
+      await ProductDataService.addProduct(productToSave);
       alert("Product successfully uploaded.");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
+
   const handleGoBack = () => {
-    // Điều hướng người dùng đến trang trước đó
     window.history.back();
   };
 
@@ -163,18 +142,6 @@ const fetchUserData = async (uid) => {
             id="imageAlt"
             name="imageAlt"
             value={product.imageAlt}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="endTime">Auction End Time:</label>
-          <input
-            type="datetime-local"
-            className="form-control"
-            id="endTime"
-            name="endTime"
-            value={product.endTime}
             onChange={handleInputChange}
             required
           />

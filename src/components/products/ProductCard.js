@@ -8,24 +8,26 @@ const ProductCard = ({ product }) => {
     useEffect(() => {
         // Method to calculate and update the time remaining
         const calculateTimeRemaining = () => {
-            if (product.endTime) {
-                const endTime = new Date(product.endTime);
+            if (product.approvedTime) {
+                const approvedTime = new Date(product.approvedTime);
+                const endTime = new Date(approvedTime.getTime() + 7200000); // Thêm 2 tiếng
                 const now = new Date();
                 const timeRemainingInMilliseconds = endTime - now;
-
+    
                 if (timeRemainingInMilliseconds <= 0) {
                     setTimeRemaining('Auction ended');
                 } else {
                     const hours = Math.floor(timeRemainingInMilliseconds / 1000 / 60 / 60);
                     const minutes = Math.floor(timeRemainingInMilliseconds / 1000 / 60) % 60;
                     const seconds = Math.floor(timeRemainingInMilliseconds / 1000) % 60;
-
+    
                     setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
                 }
             } else {
                 setTimeRemaining('Auction time not available');
             }
         };
+    
 
         // Call calculateTimeRemaining immediately and every second afterwards 
         calculateTimeRemaining();
@@ -34,6 +36,11 @@ const ProductCard = ({ product }) => {
         // Clean up our interval timer on unmount
         return () => clearInterval(intervalId);
     }, [product.endTime]);
+
+    // Kiểm tra nếu sản phẩm chưa được xét duyệt thì không hiển thị
+    if (!product.isApproved) {
+        return null;
+    }
 
     return (
         <div className="product-card">
@@ -52,10 +59,8 @@ const ProductCard = ({ product }) => {
                 <div className="product-foot">
                     <b>Người bán:</b> &emsp; {product.username || "Unknown Seller"}
                 </div>
-
             </div>
         </div>
-
     );
 };
 
@@ -67,6 +72,7 @@ ProductCard.propTypes = {
         description: PropTypes.string,
         price: PropTypes.string,
         endTime: PropTypes.number,
+        isApproved: PropTypes.bool,
     }).isRequired,
 };
 

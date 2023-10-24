@@ -1,44 +1,35 @@
 import { db } from "../firebase-config";
-
-import {
-    collection,
-    getDocs,
-    deleteDoc,
-    doc,
-    addDoc,
-    updateDoc,
-    getDoc,
-    query,
-    where,
-    setDoc,
-} from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc, updateDoc, getDoc, query, where, setDoc } from "firebase/firestore";
 
 const productCollectionRef = collection(db,"products");
 
 class ProductDataService {
+    constructor() {
+        this.productCollectionRef = productCollectionRef;
+    }
 
-    getAllProduct = () => {
-        return getDocs(productCollectionRef);
-    };
-    deleteProduct = (id) => {
+    async getAllProduct() {
+        return getDocs(this.productCollectionRef);
+    }
+
+    async deleteProduct(id) {
         const productDoc = doc(db,"products",id);
         return deleteDoc(productDoc);
-    };
-    addProduct = (newProduct) => {
-        return addDoc(productCollectionRef,newProduct);
-    };
+    }
 
+    async addProduct(newProduct) {
+        return addDoc(this.productCollectionRef,newProduct);
+    }
 
-    updateProduct = (id,updateProductr) => {
+    async updateProduct(id, updateProduct) {
         const productDoc = doc(db,"products",id);
-        return updateDoc(productDoc,updateDoc);
-    };
+        return updateDoc(productDoc,updateProduct);
+    }
 
-    getProduct = (id) => {
+    async getProduct(id) {
         const productDoc = doc(db,"products",id);
         return getDoc(productDoc);
-    };    
-
+    }    
 
     async searchProductByTitle(title) {
         const productsRef = collection(db, 'products');
@@ -46,5 +37,20 @@ class ProductDataService {
         return querySnapshot;
     }
 
+    async getPendingProducts() {
+        const querySnapshot = await getDocs(query(productCollectionRef, where("isApproved", "==", false)));
+        const products = [];
+        querySnapshot.forEach((doc) => {
+            products.push({ id: doc.id, ...doc.data() });
+        });
+        return products;
+    }
+
+    async approveProduct(productId) {
+        const productDoc = doc(db, "products", productId);
+        const currentTime = new Date().toISOString();
+        return updateDoc(productDoc, { isApproved: true ,approvedTime: currentTime});
+    }
+    
 }
-export default ProductDataService;
+export default new ProductDataService();
