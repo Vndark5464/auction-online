@@ -79,11 +79,15 @@ const ProductList = () => {
                     </div>
                 </div>
                 <div className="col"></div>
+                
                 {products.map(product => (
-                    <div  key={product.id}>
-                        <ProductCard product={product} />
-                    </div>
+                    product.isApproved && (
+                        <div key={product.id}>
+                            <ProductCard product={product} />
+                        </div>
+                    )
                 ))}
+
 
             </div>
         </div>
