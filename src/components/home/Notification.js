@@ -22,6 +22,9 @@ const Notification = () => {
         };
     
         fetchNotifications();
+        return () => {
+            setNotifications([]); // Reset notifications
+        };
     }, [currentUser]);
     
     
