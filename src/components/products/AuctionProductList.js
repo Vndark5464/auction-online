@@ -50,13 +50,19 @@ const ProductList = () => {
     const handleClick = () => {
         navigate('/upload-products');
     };
+    const handleClick2 = () => {
+        navigate('/my-products');
+    };
     
     return (
         <>
         <Header />
         
         <div className="container-xl px-4 mt-4">
-        <button id="button-product" onClick={handleClick}>Upload Product</button>
+        <div className="button-product-click">
+        <button type="button" class="btn btn-primary btn-lg" onClick={handleClick}>Upload Product</button>
+        <button type="button" class="btn btn-secondary btn-lg" onClick={handleClick2}>My Products</button>
+        </div>
             <div className="row row-cols-1 row-cols-md-2 g-4">
             
                 <div className="col">

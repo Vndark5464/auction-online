@@ -39,13 +39,7 @@
     margin-left: 20px;
   }
 
-h1, h2, h3, h4, h5, h6 {
-	margin: 0;
-	padding: 0;
-	line-height: .9;
-	font-weight: 700;
-	color: #333;
-}
+
 .profile-block {
     margin:30px auto;
     position: relative;

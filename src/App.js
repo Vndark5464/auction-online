@@ -12,6 +12,8 @@ import UserManagement from './components/admin/UserManagement';
 import ProductManagement from './components/admin/ProductManagement';
 import Notification from './components/home/Notification';
 import NotificationPage from './components/home/NotificationPage';
+import MyProducts from './components/products/MyProducts';
+import ProductDetails from './components/products/ProductDetails';
 
 const App = () => {
 
@@ -38,6 +40,8 @@ const App = () => {
         <Route path="/admin/product-management" element={<ProductManagement />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/notification-page" element={<NotificationPage />} />
+        <Route path="/my-products" element={<MyProducts />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
       </Routes>
     </Router>
   );

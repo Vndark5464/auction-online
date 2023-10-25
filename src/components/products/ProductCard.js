@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import '../../assets/css/product.css'
 
@@ -10,7 +11,7 @@ const ProductCard = ({ product }) => {
         const calculateTimeRemaining = () => {
             if (product.approvedTime) {
                 const approvedTime = new Date(product.approvedTime);
-                const endTime = new Date(approvedTime.getTime() + 7200000); // Thêm 2 tiếng
+                const endTime = new Date(approvedTime.getTime() + 86400000); // Thêm 2 tiếng
                 const now = new Date();
                 const timeRemainingInMilliseconds = endTime - now;
     
@@ -43,24 +44,26 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <div className="product-card">
-            <div className="product-thumbnail">
-                <img src={product.imageSrc || "placeholder.jpg"} alt={product.imageAlt || "Product Image"} />
-            </div>
-            <div className="product-info">
-                <h3 className="product-title">{product.title}</h3>
-                <p className="product-description"><b>Năm:</b> &emsp; {product.excerpt || "No description available"}</p>
-                <div className="product-foot"><b>Giá khởi điểm:</b>
-                    <span className="product-price"> {product.price}</span>                 
+        <Link to={`/product-details/${product.id}`}>
+        <div className="container m-3">
+        <div className="card mb-4">
+            <div className="row g-0">
+                <div className="col-md-4">
+                    <img alt={product.imageAlt || "Product Image"} src={product.imageSrc || "placeholder.jpg"}  className="img-fluid"/>
                 </div>
-                <div className="product-foot">
-                    <span className="product-time-remaining"><b>Thời gian còn lại:</b> &emsp; {timeRemaining}</span>
-                </div>
-                <div className="product-foot">
-                    <b>Người bán:</b> &emsp; {product.username || "Unknown Seller"}
+                <div className="col-md-8">
+                    <div className="card-body d-flex flex-column justify-content-between">
+                        <h5 className="card-title">{product.title}</h5>
+                        <p className="card-text"><b>Năm:</b> &emsp; {product.excerpt || "No description available"}</p>
+                        <p className="card-text"><b>Giá khởi điểm:</b> {product.price}</p>
+                        <p className="card-text"><b>Thời gian còn lại:</b> &emsp; {timeRemaining}</p>
+                        <p className="card-text"><b>Người bán:</b> &emsp; {product.username || "Unknown Seller"}</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    </Link>
     );
 };
 

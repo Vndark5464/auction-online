@@ -85,10 +85,10 @@ const UploadProduct = () => {
   return (
     <>
       <Header />
-      <button onClick={handleGoBack}>Back</button>
+      <button className="btn btn-secondary mb-3" onClick={handleGoBack}>Back</button>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Name</label>
+        <div className="mb-3">
+          <label htmlFor="title" className="form-label">Name</label>
           <input
             type="text"
             className="form-control"
@@ -99,8 +99,8 @@ const UploadProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="excerpt">Description:</label>
+        <div className="mb-3">
+          <label htmlFor="excerpt" className="form-label">Description:</label>
           <input
             type="text"
             className="form-control"
@@ -111,8 +111,8 @@ const UploadProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="price">Price:</label>
+        <div className="mb-3">
+          <label htmlFor="price" className="form-label">Price:</label>
           <input
             type="number"
             className="form-control"
@@ -123,19 +123,19 @@ const UploadProduct = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="imageSrc">Image:</label>
+        <div className="mb-3">
+          <label htmlFor="imageSrc" className="form-label">Image:</label>
           <input
             type="file"
-            className="form-control-file"
+            className="form-control"
             id="imageSrc"
             name="imageSrc"
             onChange={handleImageChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="imageAlt">Image Alt Text:</label>
+        <div className="mb-3">
+          <label htmlFor="imageAlt" className="form-label">Image Alt Text:</label>
           <input
             type="text"
             className="form-control"

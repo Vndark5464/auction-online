@@ -1,67 +1,7 @@
-.title-product{
-  margin: 20px 0;
+.button-product-click {
+  margin-left: 900px;
 }
-
-.product-card {
-  display: flex; /* Sử dụng Flexbox để sắp xếp nội dung */
-  border: 1px solid #efc5c5;
-  padding: 10px;
-  width: 500px; /* Để có 2 sản phẩm trên mỗi hàng, đặt chiều rộng là 45% và đặt margin để tạo khoảng cách */
-margin-left: 100px;
-}
-
-/* Thiết lập kiểu cho hình ảnh sản phẩm */
-.product-thumbnail img {
-  width: 200px;
-  height: 200px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-/* Thiết lập kiểu cho tiêu đề sản phẩm */
-.product-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0 30px 10px ;
-  text-align: center;
-}
-
-/* Thiết lập kiểu cho mô tả sản phẩm */
-.product-description {
-  font-size: 14px;
-  color: #555;
-  margin: 2px 0;
-}
-
-/* Thiết lập kiểu cho giá sản phẩm */
-.product-price {
-  font-size: 16px;
-  font-weight: bold;
-  color: #ff5722;
-}
-
-/* Thiết lập kiểu cho thời gian còn lại */
-.product-time-remaining {
-  font-size: 14px;
-  color: #777;
-}
-
-/* Thiết lập kiểu cho phần footer của sản phẩm */
-.product-foot {
-  margin-top: 10px;
-}
-.product-info {
-  margin-left: 10%;
-}
-#button-product {
-  float: right;
-  margin: 20px 0;
-  background-color: #58257b;
-  border: none; 
-  color: white; 
-  padding: 15px 32px;  
-  text-align: center; 
-  text-decoration: none; 
-  display: inline-block; 
-  font-size: 16px;
+a {
+  text-decoration: none;
+  color: inherit;
 }
