@@ -149,15 +149,16 @@ useEffect(() => {
 
 
 return (
-    <div className="product-details container mt-5">
-      {product ? (
-        <div className="row g-4">
-          <div className="col-md-6">
-            <div className="card">
-              <img src={product.imageSrc} alt={product.imageAlt} className="img-fluid rounded-start" />
+    <div className="product-details container mt-5 d-flex flex-column flex-md-row align-items-start align-items-md-stretch" role="main">
+    {product ? (
+      <>
+          <div className="col-md-4 p-0 position-relative">
+            <div className="card w-100 h-100">
+              <img src={product.imageSrc} alt={product.imageAlt} className="img-fluid rounded-start h-100 w-100 object-fit-cover" style={{height: '300px', width: '300px'}}/>
             </div>
           </div>
-          <div className="col-md-6">
+        
+          <div className="col-md-4 p-0 d-flex flex-column justify-content-between mx-md-3 mx-0">
             <div className="card-body">
               <h2 className="card-title mb-3">{product.title}</h2>
               <p className="mb-2"><span className="fw-bold">Năm:</span> {product.excerpt}</p>
@@ -165,31 +166,36 @@ return (
               <p className="mb-2"><span className="fw-bold">Thời gian còn lại:</span>: {timeRemaining}</p>
               <p className="mb-2"><span className="fw-bold">Người bán:</span> {product.username}</p>
             </div>
-            {/* Giao diện để nhập giá mới và nút "Ra giá mới" */}
-      <div className="bid-section">
-        <h3>Ra giá mới</h3>
-        <input
-          type="number"
-          value={newBid}
-          onChange={(e) => setNewBid(Number(e.target.value))}
-        />
-        <button onClick={handleNewBid}>Ra giá mới</button>
-      </div>
-
-      {/* Hiển thị lịch sử đấu giá */}
-      <div className="bid-history">
-        <h3>Lịch sử đấu giá</h3>
-        <ul>
-    {bidHistory.map((bid, index) => (
-      <li key={index}>
-        Thời gian : {bid.timestamp},Người đấu giá: {bid.username}, Giá: {bid.bidAmount}
-      </li>
-    ))}
-  </ul>
-      </div>
+            <div className="bid-section p-3">
+              <h3>Ra giá mới</h3>
+              <label htmlFor="newBid" className="visually-hidden">Nhập giá mới</label>
+              <input
+                type="number"
+                id="newBid"
+                value={newBid}
+                onChange={(e) => setNewBid(Number(e.target.value))}
+                required
+                min={product.price + 1}
+                aria-label="Nhập giá mới"
+              />
+              <button onClick={handleNewBid}>Ra giá mới</button>
+            </div>
           </div>
-        </div>
 
+          <div className="col-md-4 p-0">
+            <div className="bid-history h-100" style={{backgroundColor: '#dcd6f7'}}>
+              <h3 className="p-3">Lịch sử đấu giá</h3>
+              <ul className="p-3">
+                {bidHistory.map((bid, index) => (
+                  <li key={index}>
+                    Thời gian : {bid.timestamp}, Người đấu giá: {bid.username}, Giá: {bid.bidAmount}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+        </>
       ) : (
         <p>Loading...</p>
       )}
