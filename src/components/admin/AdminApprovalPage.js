@@ -44,29 +44,34 @@ const AdminApprovalPage = () => {
   };
   
   return (
-    <div>
-      <h1 id="adminPageTitle">Products Awaiting Approval</h1>
-      <table role="table" aria-labelledby="adminPageTitle">
+    <div className="container mt-5">
+      <h1 id="adminPageTitle" className="mb-3">Products Awaiting Approval</h1>
+      <table className="table table-striped table-hover" aria-labelledby="adminPageTitle">
         <thead>
           <tr>
-            <th role="columnheader" scope="col">Title</th>
-            <th role="columnheader" scope="col">Description</th>
-            <th role="columnheader" scope="col">Price</th>
-            <th role="columnheader" scope="col">Image</th>
-            <th role="columnheader" scope="col">Action</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {pendingProducts.map((product, index) => (
             <tr key={product.id}>
-              <td role="cell">{product.title}</td>
-              <td role="cell">{product.excerpt}</td>
-              <td role="cell">{product.price}</td>
-              <td role="cell"><img src={product.imageSrc} alt={product.title} width="100"/></td>
-              <td role="cell">
-                <button onClick={() => handleApprove(product.id)} 
-                                aria-label={`Approve product ${product.title}`} 
-                                aria-describedby={`product${index + 1}`}>Approve</button>
+              <td>{product.title}</td>
+              <td>{product.excerpt}</td>
+              <td>{product.price}</td>
+              <td><img src={product.imageSrc} alt={product.title} width="100"/></td>
+              <td>
+                <button 
+                    className="btn btn-outline-primary" 
+                    onClick={() => handleApprove(product.id)} 
+                    aria-label={`Approve product ${product.title}`} 
+                    aria-describedby={`product${index + 1}`}
+                >
+                    Approve
+                </button>
               </td>
             </tr>
           ))}

@@ -121,7 +121,7 @@ const ProductDetails = () => {
         const calculateTimeRemaining = () => {
             if (product && product.approvedTime) {
                 const approvedTime = new Date(product.approvedTime);
-                const endTime = new Date(approvedTime.getTime() + 360000); // Thêm 24 tiếng
+                const endTime = new Date(approvedTime.getTime() + 7200000); // Thêm 24 tiếng
                 const now = new Date();
                 const timeRemainingInMilliseconds = endTime - now;
 

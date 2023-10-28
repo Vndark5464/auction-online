@@ -14,6 +14,7 @@ import Notification from './components/home/Notification';
 import NotificationPage from './components/home/NotificationPage';
 import MyProducts from './components/products/MyProducts';
 import ProductDetails from './components/products/ProductDetails';
+import FinishedProductsPage from './components/admin/FinishedProductsPage';
 
 const App = () => {
 
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/notification-page" element={<NotificationPage />} />
         <Route path="/my-products" element={<MyProducts />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
+        <Route path="/finished-products" element={<FinishedProductsPage />} />
       </Routes>
     </Router>
   );

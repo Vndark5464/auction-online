@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs,query,where } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
     totalUsers: 0,
-    totalProducts: 0
+    totalProducts: 0,
   });
 
   useEffect(() => {

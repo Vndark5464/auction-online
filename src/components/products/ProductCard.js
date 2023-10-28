@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
     const calculateTimeRemaining = async () => {
         if (product.approvedTime) {
             const approvedTime = new Date(product.approvedTime);
-            const endTime = new Date(approvedTime.getTime() + 360000); // Thêm 2 tiếng
+            const endTime = new Date(approvedTime.getTime() + 7200000); // Thêm 2 tiếng
             const now = new Date();
             const timeRemainingInMilliseconds = endTime - now;
 
