@@ -33,7 +33,7 @@ export default function RevenueGraph() {
     }
 
     setChartData({
-      labels: labels,
+      labels: [],
       datasets: [
         {
           label: 'Doanh thu hàng ngày từ đấu giá',
@@ -52,9 +52,10 @@ export default function RevenueGraph() {
 
   return (
     <div>
-      {chartData && <Line data={chartData} />}
+      {chartData && chartData.labels && chartData.datasets && <Line data={chartData} />}
     </div>
   );
+  
 }
 
 function formatDate(date) {
