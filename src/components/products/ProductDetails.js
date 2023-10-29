@@ -121,7 +121,7 @@ const ProductDetails = () => {
         const calculateTimeRemaining = () => {
             if (product && product.approvedTime) {
                 const approvedTime = new Date(product.approvedTime);
-                const endTime = new Date(approvedTime.getTime() + 7200000); // Thêm 24 tiếng
+                const endTime = new Date(approvedTime.getTime() + 864000000); // Thêm 24 tiếng
                 const now = new Date();
                 const timeRemainingInMilliseconds = endTime - now;
 
@@ -161,11 +161,19 @@ const ProductDetails = () => {
         }
     }, [timeRemaining, product, bidHistory, uid]);
 
+    const handleGoBack = () => {
+        window.history.back();
+      };
+
     return (
+        <div className="container mt-1">
+        <button className="btn btn-secondary mb-3" onClick={handleGoBack}>Back</button>
         <div className="product-details container mt-5 d-flex flex-column flex-md-row align-items-start align-items-md-stretch" role="main">
+        
             {product ? (
                 <>
                     <div className="col-md-4 p-0 position-relative">
+                    
                         <div className="card w-100 h-100">
                             <img src={product.imageSrc} alt={product.imageAlt} className="img-fluid rounded-start h-100 w-100 object-fit-cover" style={{ height: '300px', width: '300px' }} />
                         </div>
@@ -178,6 +186,8 @@ const ProductDetails = () => {
                             <p className="mb-2"><span className="fw-bold">Giá hiện tại:</span> {product.price}</p>
                             <p className="mb-2"><span className="fw-bold">Thời gian còn lại:</span>: {auctionEnded ? 'Đấu giá đã kết thúc' : timeRemaining}</p>
                             <p className="mb-2"><span className="fw-bold">Người bán:</span> {product.username}</p>
+                            <p className="mb-2"><span className="fw-bold">Mô tả:</span> {product.imageAlt}</p>
+                            
                         </div>
                         {auctionEnded ? (
                             <div className="bid-section p-3">
@@ -185,6 +195,7 @@ const ProductDetails = () => {
                                 <p>Người đấu giá cuối cùng: {product.lastBuy}</p>
                                 <p>Giá cuối cùng: {product.price}</p>
                             </div>
+
                         ) : (
                             <div className="bid-section p-3">
                                 <h3>Ra giá mới</h3>
@@ -206,7 +217,7 @@ const ProductDetails = () => {
                             </div>
                         )}
                     </div>
-
+                                    
                     <div className="col-md-4 p-0">
                         <div className="bid-history h-100" style={{ backgroundColor: '#dcd6f7' }}>
                             <h3 className="p-3">Lịch sử đấu giá</h3>
@@ -219,11 +230,12 @@ const ProductDetails = () => {
                             </ul>
                         </div>
                     </div>
-
+                                    
                 </>
             ) : (
                 <p>Loading...</p>
             )}
+        </div>
         </div>
     );
 }

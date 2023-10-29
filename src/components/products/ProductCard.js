@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
     const calculateTimeRemaining = async () => {
         if (product.approvedTime) {
             const approvedTime = new Date(product.approvedTime);
-            const endTime = new Date(approvedTime.getTime() + 7200000); // Thêm 2 tiếng
+            const endTime = new Date(approvedTime.getTime() + 864000000); // Thêm 2 tiếng
             const now = new Date();
             const timeRemainingInMilliseconds = endTime - now;
 
@@ -90,7 +90,7 @@ const ProductCard = ({ product }) => {
               <div className="card-body d-flex flex-column justify-content-between">
                 <h5 className="card-title">{product.title}</h5>
                 <p className="card-text"><b>Năm:</b> &emsp; {product.excerpt || "No description available"}</p>
-                <p className="card-text"><b>Giá khởi điểm:</b> {product.price}</p>
+                <p className="card-text"><b>Giá :&emsp;</b> {product.price}</p>
                 <p className="card-text"><b>Thời gian còn lại:</b> &emsp; {timeRemaining}</p>
                 <p className="card-text"><b>Người bán:</b> &emsp; {product.username || "Unknown Seller"}</p>
               </div>
