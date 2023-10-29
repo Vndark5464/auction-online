@@ -42,9 +42,14 @@ const AdminApprovalPage = () => {
       console.error("Error approving product:", error);
     }
   };
+  const handleGoBack = () => {
+    window.history.back();
+  };
   
   return (
+    <>
     <div className="container mt-5">
+    <button className="btn btn-secondary mb-3" onClick={handleGoBack}>Back</button>
       <h1 id="adminPageTitle" className="mb-3">Products Awaiting Approval</h1>
       <table className="table table-striped table-hover" aria-labelledby="adminPageTitle">
         <thead>
@@ -78,6 +83,7 @@ const AdminApprovalPage = () => {
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 

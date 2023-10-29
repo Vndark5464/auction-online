@@ -4,6 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import { deleteDoc,doc } from 'firebase/firestore';
 
+
 const FinishedProductsPage = () => {
     const [finishedProducts, setFinishedProducts] = useState([]);
 
@@ -32,9 +33,13 @@ const FinishedProductsPage = () => {
         }
     };
     
-
+    const handleGoBack = () => {
+        window.history.back();
+      };
     return (
+        <>
         <div className="container mt-5">
+        <button className="btn btn-secondary mb-3" onClick={handleGoBack}>Back</button>
             <h1>Sản phẩm đã đấu giá thành công</h1>
             <table className="table table-striped mt-3">
                 <thead>
@@ -63,6 +68,7 @@ const FinishedProductsPage = () => {
                 </tbody>
             </table>
         </div>
+        </>
     );
 }
 

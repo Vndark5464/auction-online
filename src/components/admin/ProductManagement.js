@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { collection, getDocs, deleteDoc, doc, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import Modal from 'react-modal';
 
 import MenuAdmin from './menu-admin';
-import AdminApprovalPage from './AdminApprovalPage';
-import FinishedProductsPage from './FinishedProductsPage';
 
 const ProductManagement = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -85,11 +84,19 @@ const ProductManagement = () => {
 
   return (
     <>
-      <div className="container mt-5">
-        <MenuAdmin />
-      </div>
-      <div className="container mt-5">
-        <h1>Quản lý sản phẩm</h1>
+ <div className="container mt-5">
+    <MenuAdmin />
+</div>
+<div className="container mt-5">
+    <div className="row">
+        <div className="col-md-8">
+            <h1>Quản lý sản phẩm</h1>
+        </div>
+        <div className="col-md-4 text-end">
+            <button onClick={() => window.location.href="/admin/approval-products"} className="btn btn-primary me-2">Approval</button>
+            <button onClick={() => window.location.href="/admin/finished-products"} className="btn btn-primary">Finished Products</button>
+        </div>
+    </div>
         <input
           type="text"
           placeholder="Tìm kiếm sản phẩm theo tên..."
@@ -121,8 +128,7 @@ const ProductManagement = () => {
           </tbody>
         </table>
       </div>
-      <AdminApprovalPage />
-      <FinishedProductsPage />
+      
 
       {/* Delete confirmation modal */}
       <Modal
