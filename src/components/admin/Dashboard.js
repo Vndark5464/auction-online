@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import 'firebase/compat/firestore';
 import { db } from '../../firebase-config';
-import RevenueGraph from './RevenueGraph';
+
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -69,7 +69,6 @@ const Dashboard = () => {
           <p className="card-text display-4">{stats.totalMoneyInWeek}</p>
         </div>
       </div>
-      <RevenueGraph />
     </div>
       </div>
     </div>
