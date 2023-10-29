@@ -17,6 +17,7 @@ import ProductDetails from './components/products/ProductDetails';
 import FinishedProductsPage from './components/admin/FinishedProductsPage';
 import AdminApprovalPage from './components/admin/AdminApprovalPage';
 import ReportViolationForm from './pages/ReportViolationForm';
+import AdminReportPage from './components/admin/AdminReportPage';
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
         <Route path="/admin/finished-products" element={<FinishedProductsPage />} />
         <Route path='/admin/approval-products' element={<AdminApprovalPage />} />
         <Route path='/report' element={<ReportViolationForm />} />
+        <Route path='admin/report' element={<AdminReportPage/>} />
 
       </Routes>
     </Router>
