@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { initializeApp } from 'firebase/app';
+import React, { useState, useContext } from 'react';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 function ReportViolationForm() {
   const [productId, setProductId] = useState('');
@@ -10,6 +10,17 @@ function ReportViolationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      alert('Please login to submit a report.');
+      return;
+    }
+
+    const userId = currentUser.uid;
+    const username = currentUser.displayName || 'Anonymous'; // Sử dụng tên hiển thị hoặc mặc định là 'Anonymous'
+
     // Thêm dữ liệu vào collection "report"
     try {
       const reportRef = collection(getFirestore(), 'report');
@@ -17,6 +28,8 @@ function ReportViolationForm() {
         productId,
         reason,
         description,
+        userId,
+        username,
         timestamp: serverTimestamp() // Thêm timestamp nếu bạn muốn
       });
       alert('Report submitted successfully!');
@@ -25,6 +38,7 @@ function ReportViolationForm() {
       alert('Failed to submit report. Please try again.');
     }
   };
+
   return (
     <div role="form" aria-labelledby="report-product-title">
     <h2 id="report-product-title">Report Product Violation</h2>

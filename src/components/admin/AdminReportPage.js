@@ -22,9 +22,11 @@ function AdminReportPage() {
   return (
     <div role="table" aria-labelledby="admin-report-title">
   <h2 id="admin-report-title">Admin Report Page</h2>
-  <table class="table table-striped" style={{width: '70%', margin: 'auto'}}>
+  <table className="table table-striped" style={{width: '70%', margin: 'auto'}}>
     <thead>
       <tr>
+        <th scope="col">User ID</th>
+        <th scope="col">Username</th>
         <th scope="col">Product ID</th>
         <th scope="col">Reason</th>
         <th scope="col">Description</th>
@@ -33,6 +35,8 @@ function AdminReportPage() {
     <tbody>
       {reports.map(report => (
         <tr key={report.id}>
+          <td>{report.userId}</td>
+          <td>{report.username}</td>
           <td>{report.productId}</td>
           <td>{report.reason}</td>
           <td>{report.description}</td>
