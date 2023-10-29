@@ -1,31 +1,19 @@
 import React, { useState } from 'react';
-import { db } from '../firebase-config';
 
 function ReportViolationForm() {
   const [productId, setProductId] = useState('');
   const [reason, setReason] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-    // Tạo một object chứa thông tin báo cáo
-    const reportData = {
+    // Handle the submission logic here, e.g., save to database or notify the admin.
+    console.log({
       productId,
       reason,
-      description,
-      // Thêm thời gian báo cáo hoặc các thông tin khác bạn muốn lưu
-    };
-  
-    try {
-      // Thêm dữ liệu vào collection "report"
-      await db.collection('report').add(reportData);
-      console.log('Báo cáo đã được lưu vào Firestore.');
-    } catch (error) {
-      console.error('Lỗi khi lưu báo cáo vào Firestore:', error);
-    }
+      description
+    });
   };
-  
 
   return (
     <div>
