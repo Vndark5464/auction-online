@@ -12,7 +12,7 @@ export default function RevenueGraph() {
     let dailyRevenue = Array(7).fill(0);
     let labels = Array(7).fill('');
 
-    for(var i = 0; i < 7; i++){
+    for (let i = 0; i < 7; i++) {
       labels[i] = formatDate(new Date(Date.now() - (7 - 1 - i) * 24 * 60 * 60 * 1000));
       const day = labels[i];
       const startOfDay = new Date(day).toISOString();
@@ -23,32 +23,32 @@ export default function RevenueGraph() {
 
       const oneDayProductsQuery = query(
         collection(db, "finishedProducts"),
-        where("approvedTime", ">=", startOfDay),
-        where("approvedTime", "<=", endOfDay),
-        orderBy("approvedTime", "asc")
+        where("auctionEndTime", ">=", startOfDay),
+        where("auctionEndTime", "<=", endOfDay),
+        orderBy("auctionEndTime", "asc")
       );
-      
+
       const oneDayProductsSnap = await getDocs(oneDayProductsQuery);
-      dailyRevenue[i] = oneDayProductsSnap.docs.reduce((total, doc) => total + Number(doc.data().price), 0);
+      dailyRevenue[i] = oneDayProductsSnap.docs.reduce((total, doc) => total + Number(doc.data().finalPrice), 0);
     }
 
     setChartData({
-        labels: labels,
-        datasets: [
-          {
-            label: 'Doanh thu hàng ngày',
-            data: dailyRevenue,
-            fill: false,
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgba(255, 99, 132, 0.2)',
-          },
-        ],
-      }); 
+      labels: labels,
+      datasets: [
+        {
+          label: 'Doanh thu hàng ngày từ đấu giá',
+          data: dailyRevenue,
+          fill: false,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgba(255, 99, 132, 0.2)',
+        },
+      ],
+    });
   };
 
   useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -59,7 +59,7 @@ export default function RevenueGraph() {
 
 function formatDate(date) {
   var dd = String(date.getDate()).padStart(2, '0');
-  var mm = String(date.getMonth() + 1).padStart(2, '0');  
+  var mm = String(date.getMonth() + 1).padStart(2, '0');
   var yyyy = date.getFullYear();
 
   return yyyy + '-' + mm + '-' + dd;
