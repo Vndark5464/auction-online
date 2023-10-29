@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import MenuAdmin from './menu-admin';
 
 function AdminReportPage() {
   const [reports, setReports] = useState([]);
@@ -20,9 +21,14 @@ function AdminReportPage() {
   }, []);
 
   return (
+    <>
     <div role="table" aria-labelledby="admin-report-title">
-  <h2 id="admin-report-title">Admin Report Page</h2>
-  <table className="table table-striped" style={{width: '70%', margin: 'auto'}}>
+    
+    <div className="container mt-5">
+    <MenuAdmin />
+            <h1>Danh sách báo cáo</h1>
+    </div>
+  <table className="table table-striped" style={{width: '50%', margin: 'auto'}}>
     <thead>
       <tr>
         <th scope="col">User ID</th>
@@ -45,6 +51,7 @@ function AdminReportPage() {
     </tbody>
   </table>
 </div>
+</>
   );
 }
 
