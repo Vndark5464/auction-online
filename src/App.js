@@ -18,6 +18,7 @@ import FinishedProductsPage from './components/admin/FinishedProductsPage';
 import AdminApprovalPage from './components/admin/AdminApprovalPage';
 import ReportViolationForm from './pages/ReportViolationForm';
 import AdminReportPage from './components/admin/AdminReportPage';
+import AdminNotificationPage from './components/admin/AdminNotificationPage';
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
         <Route path='/admin/approval-products' element={<AdminApprovalPage />} />
         <Route path='/report' element={<ReportViolationForm />} />
         <Route path='admin/report' element={<AdminReportPage/>} />
+        <Route path='admin/sent-notification' element={<AdminNotificationPage/>} />
 
       </Routes>
     </Router>
