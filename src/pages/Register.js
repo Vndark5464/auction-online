@@ -22,6 +22,11 @@ export default function Register() {
     const [alertMessage, setAlertMessage] = useState('');
     const navigate = useNavigate();
     const auth = getAuth();
+    const isUsernameUnique = async (username) => {
+        const users = await UserDataService.getAllUser(); // Assuming there's a method to fetch all users
+        return !users.some(user => user.username === username);
+    };
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,10 +38,16 @@ export default function Register() {
 
     const registerUser = async (e) => {
         e.preventDefault();
-        const { email, password, confirmPassword, ...restFormData } = formData;
+        const { email, password, confirmPassword,username, ...restFormData } = formData;
     
         if (password !== confirmPassword) {
             setAlertMessage('Passwords do not match');
+            return;
+        }
+        
+        const isUnique = await isUsernameUnique(username);
+        if (!isUnique) {
+            setAlertMessage('Username already exists. Please choose a different one.');
             return;
         }
     

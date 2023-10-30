@@ -33,5 +33,7 @@ class UserDataService {
     getUser = (id) => {
         return doc(db,"Users",id); // Trả về DocumentReference
     }  
+
+
 }
 export default new UserDataService;
