@@ -22,7 +22,7 @@ function Header() {
       dropdownList.map(dropdown => dropdown.dispose());
     }
   }, []);
-
+  console.log("User's profile image URL:", userData?.profileImageURL);
   return (
     <header id='head-head' role="banner" className="p-3 bg-dark text-white">
       <div className="container">
@@ -53,9 +53,10 @@ function Header() {
                 <img 
                   src={userData?.profileImageURL}
                   alt="User Avatar"
-                  width="30" 
+                  width="60" 
                   className="rounded-circle"
                 />
+                
                 </Link>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li className='dropdown-item'>{userData ? userData.lastName : ''}</li>
