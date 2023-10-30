@@ -22,10 +22,12 @@ export default function Register() {
     const [alertMessage, setAlertMessage] = useState('');
     const navigate = useNavigate();
     const auth = getAuth();
+
     const isUsernameUnique = async (username) => {
-        const users = await UserDataService.getAllUser(); // Assuming there's a method to fetch all users
-        return !users.some(user => user.username === username);
-    };
+    return !await UserDataService.checkUsernameExists(username);
+};
+
+    
     
 
     const handleChange = (e) => {

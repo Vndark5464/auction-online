@@ -7,7 +7,9 @@ import {
     doc,
     updateDoc,
     getDoc,
-    setDoc
+    setDoc,
+    query,
+    where
 } from "firebase/firestore";
 
 const userCollectionRef = collection(db,"Users");
@@ -33,7 +35,10 @@ class UserDataService {
     getUser = (id) => {
         return doc(db,"Users",id); // Trả về DocumentReference
     }  
-
+    async checkUsernameExists(username) {
+        const userSnapshot = await getDocs(query(userCollectionRef, where("username", "==", username)));
+        return !userSnapshot.empty;
+    }
 
 }
 export default new UserDataService;
